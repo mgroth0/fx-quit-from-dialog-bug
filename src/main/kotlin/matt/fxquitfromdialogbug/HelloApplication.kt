@@ -1,12 +1,16 @@
 package matt.fxquitfromdialogbug
 
 import javafx.application.Application
-import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.scene.control.Dialog
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.VBox
+import javafx.stage.Modality
 import javafx.stage.Stage
+
+enum class Bug {
+    FrozenDialogOnQuit
+}
 
 class HelloApplication : Application() {
     override fun start(stage: Stage) {
@@ -14,8 +18,12 @@ class HelloApplication : Application() {
         stage.title = "Hello!"
         stage.scene = scene.apply {
             setOnKeyPressed {
-                if (it.code == KeyCode.N && it.isMetaDown) {
+                if (it.code == KeyCode.A && it.isMetaDown) {
                     Dialog<String>().apply {
+                    }.showAndWait()
+                } else if (it.code == KeyCode.B && it.isMetaDown) {
+                    Stage().apply {
+                        initModality(Modality.APPLICATION_MODAL)
                     }.showAndWait()
                 }
             }
